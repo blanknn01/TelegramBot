@@ -3,10 +3,18 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.LongPollingBot;
+
+import java.sql.Array;
+import java.sql.ClientInfoStatus;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bot extends TelegramLongPollingBot{
     public static void main(String[] args) {
@@ -28,6 +36,7 @@ public class Bot extends TelegramLongPollingBot{
         sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
         try{
+            setButtons(sendMessage);
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
@@ -49,6 +58,22 @@ public class Bot extends TelegramLongPollingBot{
                             break;
             }
         }
+    }
+
+    public void setButtons(SendMessage sendmessage){
+        ReplyKeyboardMarkup replyKeyboardMarkup= new ReplyKeyboardMarkup();
+        sendmessage.setReplyMarkup(replyKeyboardMarkup);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        List<KeyboardRow> keyboardRowList = new ArrayList<>();
+        KeyboardRow keyboardFirstRow= new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton("/help"));
+        keyboardFirstRow.add(new KeyboardButton("/settings"));
+
+        keyboardRowList.add(keyboardFirstRow);
+        replyKeyboardMarkup.setKeyboard(keyboardRowList);
     }
     public String getBotUsername(){
         return "Test";
