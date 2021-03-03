@@ -49,6 +49,9 @@ public class Bot extends TelegramLongPollingBot {
                 case "/settings":
                     sendMsg(message, "what we will do");
                     break;
+                case "/start":
+                    sendMsg(message, "Where wou want to go");
+                    break;
             }
         }
     }
@@ -62,10 +65,14 @@ public class Bot extends TelegramLongPollingBot {
 
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
-        keyboardFirstRow.add(new KeyboardButton("/settings"));
-
+        keyboardSecondRow.add(new KeyboardButton("/settings"));
+        keyboardThirdRow.add(new KeyboardButton("/settings"));
         keyboardRowList.add(keyboardFirstRow);
+        keyboardRowList.add(keyboardSecondRow);
+        keyboardRowList.add(keyboardThirdRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
     }
 
