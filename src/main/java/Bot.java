@@ -11,13 +11,15 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.LongPollingBot;
 
-import java.sql.Array;
-import java.sql.ClientInfoStatus;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) {
+
+
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
@@ -51,13 +53,18 @@ public class Bot extends TelegramLongPollingBot {
                 case "/settings":
                     sendMsg(message, "what we will do");
                     break;
-                case "/start":
-                {
-                    sendMsg(message," Where you want to be???");
+                case "/start": {
+                    sendMsg(message, "please first of all send us your name");
+                   database data= new database();
+                    Message name = update.getMessage();
+                   data.GG(message,"nurassyl");
                 }
+
+
             }
         }
     }
+
 
     public void setButtons(SendMessage sendmessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
