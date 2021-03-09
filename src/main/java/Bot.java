@@ -13,6 +13,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.LongPollingBot;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class Bot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
+        Model model = new Model();
         if (message != null && message.hasText()) {
             switch (message.getText()) {
                 case "/help":
@@ -89,8 +91,17 @@ public class Bot extends TelegramLongPollingBot {
                         e.printStackTrace();
 
                     }
+
+
+
                 }
                 break;
+                default:
+                    try {
+                    sendMsg(message, Weather.getWeather(message.getText(), model));
+                } catch (IOException e) {
+                    sendMsg(message, "City not found");
+                }
             }
         }
     }
