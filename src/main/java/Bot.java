@@ -1,8 +1,10 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -10,14 +12,13 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.LongPollingBot;
-
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Bot extends TelegramLongPollingBot {
+
     public static void main(String[] args) {
+
 
 
         ApiContextInitializer.init();
@@ -41,11 +42,13 @@ public class Bot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
     }
+
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        if (message != null && message.hasText()) {
+        if (message != null&& message.hasText()) {
             switch (message.getText()) {
                 case "/help":
                     sendMsg(message, "How can I help you");
@@ -53,17 +56,23 @@ public class Bot extends TelegramLongPollingBot {
                 case "/settings":
                     sendMsg(message, "what we will do");
                     break;
-                case "/start": {
-                    sendMsg(message, "please first of all send us your name");
-                   database data= new database();
-                    Message name = update.getMessage();
-                   data.GG(message,"nurassyl");
+                case "/register": {
+                    try {
+                        User user=message.getFrom();
+                        String userName= user.getUserName();
+                        Register reg=new Register();
+                        reg.reg(userName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
                 }
-
-
+              break;
             }
         }
     }
+
+
 
 
     public void setButtons(SendMessage sendmessage) {
@@ -79,7 +88,7 @@ public class Bot extends TelegramLongPollingBot {
         KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardSecondRow.add(new KeyboardButton("/settings"));
-        keyboardThirdRow.add(new KeyboardButton("/start"));
+        keyboardThirdRow.add(new KeyboardButton("/register"));
 
         keyboardRowList.add(keyboardFirstRow);
         keyboardRowList.add(keyboardSecondRow);
