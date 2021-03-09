@@ -1,3 +1,5 @@
+import database.database;
+
 public class Register {
 
   public void reg(String msg)

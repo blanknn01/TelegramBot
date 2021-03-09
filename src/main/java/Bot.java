@@ -1,6 +1,6 @@
+import database.CheckData;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -12,6 +12,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.generics.LongPollingBot;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,6 @@ public class Bot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
         try {
             setButtons(sendMessage);
@@ -51,17 +52,42 @@ public class Bot extends TelegramLongPollingBot {
         if (message != null&& message.hasText()) {
             switch (message.getText()) {
                 case "/help":
-                    sendMsg(message, "How can I help you");
+                    sendMsg(message, "Hello there I am a Weather bot and I can find information about weather in concreate location so first " +
+                            "of all I recommend you register yourself in our bot" +
+                            "in order to make me better" +
+                            "I will take some information about(only your username, other information will not handled)");
+                    sendMsg(message,"So to register please press /register button or just type /register" );
                     break;
                 case "/settings":
-                    sendMsg(message, "what we will do");
+                    User user=message.getFrom();
+                    String userName= user.getUserName();
+                    CheckData checkData= new CheckData();
+
+                    try {
+                        if(userName.equals(checkData.Check(userName)))
+                    {
+                        sendMsg(message, "what we will do");
+                    } else{
+                        sendMsg(message,"please first register");
+                    }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                     break;
                 case "/register": {
+                    CheckData ccheckData= new CheckData();
+
                     try {
-                        User user=message.getFrom();
-                        String userName= user.getUserName();
-                        Register reg=new Register();
-                        reg.reg(userName);
+                        user = message.getFrom();
+                        userName = user.getUserName();
+                        if(userName.equals(ccheckData.Check(userName)))
+                        {
+                            sendMsg(message,"You have already registered");
+                        } else{
+                            Register reg=new Register();
+                            reg.reg(userName);
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
 
