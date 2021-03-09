@@ -22,7 +22,6 @@ public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) {
 
 
-
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
@@ -49,42 +48,40 @@ public class Bot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        if (message != null&& message.hasText()) {
+        if (message != null && message.hasText()) {
             switch (message.getText()) {
                 case "/help":
                     sendMsg(message, "Hello there I am a Weather bot and I can find information about weather in concreate location so first " +
                             "of all I recommend you register yourself in our bot" +
                             "in order to make me better" +
                             "I will take some information about(only your username, other information will not handled)");
-                    sendMsg(message,"So to register please press /register button or just type /register" );
+                    sendMsg(message, "So to register please press /register button or just type /register");
                     break;
                 case "/settings":
-                    User user=message.getFrom();
-                    String userName= user.getUserName();
-                    CheckData checkData= new CheckData();
+                    User user = message.getFrom();
+                    String userName = user.getUserName();
+                    CheckData checkData = new CheckData();
 
                     try {
-                        if(userName.equals(checkData.Check(userName)))
-                    {
-                        sendMsg(message, "what we will do");
-                    } else{
-                        sendMsg(message,"please first register");
-                    }
+                        if (userName.equals(checkData.Check(userName))) {
+                            sendMsg(message, "what we will do");
+                        } else {
+                            sendMsg(message, "please first register");
+                        }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
                     break;
                 case "/register": {
-                    CheckData ccheckData= new CheckData();
+                    CheckData ccheckData = new CheckData();
 
                     try {
                         user = message.getFrom();
                         userName = user.getUserName();
-                        if(userName.equals(ccheckData.Check(userName)))
-                        {
-                            sendMsg(message,"You have already registered");
-                        } else{
-                            Register reg=new Register();
+                        if (userName.equals(ccheckData.Check(userName))) {
+                            sendMsg(message, "You have already registered");
+                        } else {
+                            Register reg = new Register();
                             reg.reg(userName);
                         }
 
@@ -93,12 +90,10 @@ public class Bot extends TelegramLongPollingBot {
 
                     }
                 }
-              break;
+                break;
             }
         }
     }
-
-
 
 
     public void setButtons(SendMessage sendmessage) {
