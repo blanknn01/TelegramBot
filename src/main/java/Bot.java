@@ -21,7 +21,6 @@ import java.util.List;
 public class Bot extends TelegramLongPollingBot {
 
 
-
     public static void main(String[] args) {
 
 
@@ -86,10 +85,10 @@ public class Bot extends TelegramLongPollingBot {
                         if (userName.equals(ccheckData.Check(userName))) {
                             sendMsg(message, "You have already registered");
                         } else {
-                            sendMsg(message,"We will take your Nickname as the your username");
+                            sendMsg(message, "We will take your Nickname as the your username");
                             Register reg = new Register();
                             reg.reg(userName);
-                            sendMsg(message,"congratz, You have successfully registered you may continue ");
+                            sendMsg(message, "congratz, You have successfully registered you may continue ");
                         }
 
                     } catch (Exception e) {
@@ -107,8 +106,8 @@ public class Bot extends TelegramLongPollingBot {
                         userName = user.getUserName();
                         if (userName.equals(cccheckData.Check(userName)))
                             sendMsg(message, Weather.getWeather(message.getText(), model));
-                         else
-                                sendMsg(message,"Please register first");
+                        else
+                            sendMsg(message, "Please register first");
                     } catch (IOException e) {
                         sendMsg(message, "City not found");
                     } catch (SQLException throwables) {

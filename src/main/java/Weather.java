@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Weather {
     public static String getWeather(String message, Model model) throws IOException {
-        URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" +message+ "&units=metric&appid=b4ae645ad3721d9bde453ba875f00d30");
+        URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + message + "&units=metric&appid=b4ae645ad3721d9bde453ba875f00d30");
 
         Scanner in = new Scanner((InputStream) url.getContent());
         String result = "";
@@ -29,7 +29,7 @@ public class Weather {
             model.setMain((String) obj.get("main"));
         }
 
-        return "City: " + model.getName() +"\n" +
+        return "City: " + model.getName() + "\n" +
                 "Temperature: " + model.getTemp() + "\n" +
                 "Humidity: " + model.getHumidity() + "\n" +
                 "Main: " + model.getMain() + "\n";

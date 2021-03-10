@@ -1,5 +1,7 @@
 package database;
+
 import java.sql.*;
+
 public class CheckData {
     public String userName;
 
@@ -13,9 +15,8 @@ public class CheckData {
             con = DriverManager.getConnection(connectionURL, "postgres", "nur123assyL");
             stmt = con.createStatement();
             res = stmt.executeQuery("SELECT * FROM public.users where users='" + text + "';");
-            while(res.next())
-            {
-                userName= res.getString("users");
+            while (res.next()) {
+                userName = res.getString("users");
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

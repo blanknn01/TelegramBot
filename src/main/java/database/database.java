@@ -1,8 +1,8 @@
 package database;
+
 import java.sql.*;
 
-public class  database {
-
+public class database {
     public void register(String text) {
         String connectionURL = "jdbc:postgresql://localhost:5432/simpledb";
         Connection con = null;
@@ -11,7 +11,7 @@ public class  database {
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(connectionURL, "postgres", "nur123assyL");
             stmt = con.createStatement();
-            stmt.execute("INSERT INTO public.users( users) " +
+            stmt.execute("INSERT INTO public.users(users) " +
                     "VALUES ('"
                     + text + "');");
 
