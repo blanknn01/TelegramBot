@@ -97,6 +97,7 @@ public class Bot extends TelegramLongPollingBot {
                 }
                 break;
                 default:
+
                     try {
                     sendMsg(message, Weather.getWeather(message.getText(), model));
                 } catch (IOException e) {
