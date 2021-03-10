@@ -85,8 +85,10 @@ public class Bot extends TelegramLongPollingBot {
                         if (userName.equals(ccheckData.Check(userName))) {
                             sendMsg(message, "You have already registered");
                         } else {
+                            sendMsg(message,"We will take your Nickname as the your username");
                             Register reg = new Register();
                             reg.reg(userName);
+                            sendMsg(message,"congratz, You have successfully registered you may continue ");
                         }
 
                     } catch (Exception e) {
@@ -98,11 +100,18 @@ public class Bot extends TelegramLongPollingBot {
                 }
                 break;
                 default:
-
+                    CheckData cccheckData = new CheckData();
                     try {
-                        sendMsg(message, Weather.getWeather(message.getText(), model));
+                        user = message.getFrom();
+                        userName = user.getUserName();
+                        if (userName.equals(cccheckData.Check(userName)))
+                            sendMsg(message, Weather.getWeather(message.getText(), model));
+                         else
+                                sendMsg(message,"Please register first");
                     } catch (IOException e) {
                         sendMsg(message, "City not found");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
             }
         }
