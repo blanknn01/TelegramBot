@@ -21,7 +21,6 @@ import java.util.List;
 public class Bot extends TelegramLongPollingBot {
 
 
-
     public static void main(String[] args) {
 
 
@@ -95,16 +94,15 @@ public class Bot extends TelegramLongPollingBot {
                     }
 
 
-
                 }
                 break;
                 default:
 
                     try {
-                    sendMsg(message, Weather.getWeather(message.getText(), model));
-                } catch (IOException e) {
-                    sendMsg(message, "City not found");
-                }
+                        sendMsg(message, Weather.getWeather(message.getText(), model));
+                    } catch (IOException e) {
+                        sendMsg(message, "City not found");
+                    }
             }
         }
     }
