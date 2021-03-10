@@ -59,7 +59,8 @@ public class Bot extends TelegramLongPollingBot {
                             "of all I recommend you register yourself in our bot" +
                             "in order to make me better" +
                             "I will take some information about(only your username, other information will not handled)");
-                    sendMsg(message, "So to register please press /register button or just type /register");
+                    sendMsg(message, "So to find the information about city just type name of the city");
+                    sendMsg(message, "To register please press /register button or just type /register");
                     break;
                 case "/settings":
                     User user = message.getFrom();
